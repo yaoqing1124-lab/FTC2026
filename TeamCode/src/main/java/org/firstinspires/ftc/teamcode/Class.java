@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-public class Class {
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+
+public abstract class Class extends OpMode {
     public class PIDFController {
 
         private double kP, kI, kD, kF;
@@ -16,7 +19,7 @@ public class Class {
             this.lastTime = System.nanoTime();
         }
 
-        public double calculate(double target, double current) {
+        public double data(double target, double current) {
 
             double error = target - current;
 
@@ -47,5 +50,4 @@ public class Class {
             lastTime = System.nanoTime();
         }
     }
-
 }

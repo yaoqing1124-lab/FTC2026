@@ -15,7 +15,7 @@ public class test3A1211 extends OpMode {
 
     private double kP = 0.01;
     private double kI = 0.00001;
-    private double kD = 0.0003;
+    private double kD = 0.0007;
 
     private double integral = 0.0;
     private double lastError = 0.0;
