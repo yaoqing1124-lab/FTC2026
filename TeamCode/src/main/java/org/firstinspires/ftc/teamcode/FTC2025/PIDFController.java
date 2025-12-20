@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FTC2025.Class;
+package org.firstinspires.ftc.teamcode.FTC2025;
 
 public class PIDFController {
 

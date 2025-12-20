@@ -61,3 +61,5 @@ public class ColorSenserSpin1214 extends OpMode {
 }
 
     //1  142~182 2 241~281 3 43~84
+
+//160  260  60
