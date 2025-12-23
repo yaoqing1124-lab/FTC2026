@@ -9,19 +9,20 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class RobotHardware {
+public class RobotHardware{
     public DcMotor lf, lb, rf, rb;
     public DcMotor shooter1, shooter2;
     public DcMotor intake;
+    public DcMotor riseball;
     public CRServo aimX1, aimX2;
     public Servo aimY1, aimY2;
     public CRServo spin;
     public Servo arm;
     public Limelight3A limelight3A;
     public AnalogInput analog;
-
     public ColorSensor color1,color2;
-    public void init(HardwareMap hardwareMap) {
+
+    public RobotHardware(HardwareMap hardwareMap) {
         lf = hardwareMap.get(DcMotor.class, "lf");
         lb = hardwareMap.get(DcMotor.class, "lb");
         rf = hardwareMap.get(DcMotor.class, "rf");
@@ -30,8 +31,10 @@ public class RobotHardware {
         shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
         shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
 
-        aimX1 = hardwareMap.get(CRServo.class, "aim1");
-        aimX2 = hardwareMap.get(CRServo.class, "aim2");
+        aimX1 = hardwareMap.get(CRServo.class, "aimX1");
+        aimX2 = hardwareMap.get(CRServo.class, "aimX2");
+        aimY1 = hardwareMap.get(Servo.class, "aimY1");
+        aimY2 = hardwareMap.get(Servo.class, "aimY2");
 
         spin = hardwareMap.get(CRServo.class, "spin");
 
@@ -44,6 +47,8 @@ public class RobotHardware {
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
 //       rf.setDirection(DcMotorSimple.Direction.REVERSE);
 //       rb.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        riseball = hardwareMap.get(DcMotor.class,"riseball");
 
         color1 = hardwareMap.get(ColorSensor.class,"color1");
         color2 = hardwareMap.get(ColorSensor.class,"color2");
