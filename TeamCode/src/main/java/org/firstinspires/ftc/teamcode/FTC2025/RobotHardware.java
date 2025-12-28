@@ -28,31 +28,32 @@ public class RobotHardware{
         rf = hardwareMap.get(DcMotor.class, "rf");
         rb = hardwareMap.get(DcMotor.class, "rb");
 
-        shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
-        shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
+        shooter1 = hardwareMap.get(DcMotor.class, "shooterU");
+        shooter2 = hardwareMap.get(DcMotor.class, "shooterD");
 
-        aimX1 = hardwareMap.get(CRServo.class, "aimX1");
-        aimX2 = hardwareMap.get(CRServo.class, "aimX2");
-        aimY1 = hardwareMap.get(Servo.class, "aimY1");
-        aimY2 = hardwareMap.get(Servo.class, "aimY2");
+        aimX1 = hardwareMap.get(CRServo.class, "TURF");
+        aimX2 = hardwareMap.get(CRServo.class, "TURB");
+        aimY1 = hardwareMap.get(Servo.class, "LS");
+        aimY2 = hardwareMap.get(Servo.class, "RS");
 
-        spin = hardwareMap.get(CRServo.class, "spin");
+        spin = hardwareMap.get(CRServo.class, "SOR");
+        spin.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight3A = hardwareMap.get(Limelight3A.class, "Limelight");
         analog = hardwareMap.get(AnalogInput.class,"analog");
 
-        intake = hardwareMap.get(DcMotor.class,"intake");
+        intake = hardwareMap.get(DcMotor.class,"Intake");
 
-        lf.setDirection(DcMotorSimple.Direction.REVERSE);
-        lb.setDirection(DcMotorSimple.Direction.REVERSE);
-//       rf.setDirection(DcMotorSimple.Direction.REVERSE);
-//       rb.setDirection(DcMotorSimple.Direction.REVERSE);
+//        lf.setDirection(DcMotorSimple.Direction.REVERSE);
+//        lb.setDirection(DcMotorSimple.Direction.REVERSE);
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        riseball = hardwareMap.get(DcMotor.class,"riseball");
+        riseball = hardwareMap.get(DcMotor.class,"LFTM");
 
-        color1 = hardwareMap.get(ColorSensor.class,"color1");
-        color2 = hardwareMap.get(ColorSensor.class,"color2");
+        color1 = hardwareMap.get(ColorSensor.class,"CS1");
+        color2 = hardwareMap.get(ColorSensor.class,"CS2");
 
-        arm = hardwareMap.get(Servo.class,"arm");
+        arm = hardwareMap.get(Servo.class,"LFTS");
        }
 }

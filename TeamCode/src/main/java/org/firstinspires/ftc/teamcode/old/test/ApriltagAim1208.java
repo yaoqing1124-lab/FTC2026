@@ -32,7 +32,7 @@ public class ApriltagAim1208 extends OpMode {
 
     @Override
     public void init() {
-        aim1 = hardwareMap.get(CRServo.class, "aim1");
+        aim1 = hardwareMap.get(CRServo.class, "TURB");
         aim2 = hardwareMap.get(CRServo.class, "aim2");
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.setPollRateHz(100); limelight.start(); limelight.pipelineSwitch(0);

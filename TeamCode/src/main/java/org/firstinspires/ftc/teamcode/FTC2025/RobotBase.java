@@ -1,18 +1,22 @@
 package org.firstinspires.ftc.teamcode.FTC2025;
 
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.List;
+
+@Configurable
 public class RobotBase {
     RobotHardware robot;
-    PIDFController ShooterPIDF = new PIDFController(0, 0, 0, 0);
-    PIDFController aimPIDF = new PIDFController(0, 0, 0, 0);
-    static final double SpinPose1 = 60;
-    static final double SpinPose2 = 160;
-    static final double SpinPose3 = 260;
-    static int spinPose = 1;
+    static PIDFController aimPIDF = new PIDFController(0.015, 0.001, 0.005, 0,5);
+    static double SpinPose1 = 60;
+    static double SpinPose2 = SpinPose1 + 100;
+    static double SpinPose3 = SpinPose1 + 200;
+    int spinPose = 1;
     public int color1;
     public int color2;
     public int color3;
@@ -34,13 +38,64 @@ public class RobotBase {
     }
 
     public void shooter(double shooterVelocity) {
-//        robot.shooter1.setPower(ShooterPIDF.data(shooterVelocity, robot.shooter1.getPower()));
-//        robot.shooter2.setPower(ShooterPIDF.data(-shooterVelocity, robot.shooter2.getPower()));
+        robot.shooter1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.shooter2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.shooter1.setPower(shooterVelocity);
         robot.shooter2.setPower(-shooterVelocity);
     }
+//    public double limelightlock(String type, int targetId) {
+//
+//        robot.limelight3A.setPollRateHz(100);
+//        robot.limelight3A.start();
+//        robot.limelight3A.pipelineSwitch(0);
+//
+//        LLResult result = robot.limelight3A.getLatestResult();
+//
+//        if (result != null && result.isValid()) {
+//
+//            switch (type) {
+//
+//                case "tx":
+//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
+//                        if (tag.getFiducialId() == targetId) {
+//                            return tag.getTx();
+//                        }
+//                    }
+//                    break;
+//
+//                case "ty":
+//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
+//                        if (tag.getFiducialId() == targetId) {
+//                            return tag.getTy();
+//                        }
+//                    }
+//                    break;
+//
+//                case "ta":
+//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
+//                        if (tag.getFiducialId() == targetId) {
+//                            return tag.getTa();
+//                        }
+//                    }
+//                    break;
+//
+//                case "id":
+//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
+//                        if (tag.getFiducialId() == targetId) {
+//                            return tag.getFiducialId();
+//                        }
+//                    }
+//                    break;
+//            }
+//        }
+//        return 0;
+//    }
+
 
     public double limelight(String type) {
+        robot.limelight3A.setPollRateHz(100);
+        robot.limelight3A.start();
+        robot.limelight3A.pipelineSwitch(0);
         LLResult result = robot.limelight3A.getLatestResult();
         if (result != null && result.isValid()) {
             switch (type) {
@@ -51,10 +106,9 @@ public class RobotBase {
                 case "ta":
                     return result.getTa();
                 case "id":
-//                    List<LLResultTypes.FiducialResult> tags = result.getFiducialResults();
+                    List<LLResultTypes.FiducialResult> tags = result.getFiducialResults();
                     for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
-                        double id = tag.getFiducialId();
-                        return id;
+                        return tag.getFiducialId();
                     }
             }
         }
@@ -62,8 +116,8 @@ public class RobotBase {
     }
 
     public void ApriltagAim() {
-        robot.aimX1.setPower(aimPIDF.data(limelight("tx"), robot.aimX1.getPower()));
-        robot.aimX2.setPower(aimPIDF.data(limelight("tx"), robot.aimX2.getPower()));
+        robot.aimX1.setPower(aimPIDF.data(-limelight("tx"), robot.aimX1.getPower()));
+        robot.aimX2.setPower(aimPIDF.data(-limelight("tx"), robot.aimX2.getPower()));
     }
 
     public void ShooterAim() {
@@ -100,7 +154,7 @@ public class RobotBase {
         robot.spin.setPower(Power);
     }
 
-    public int isgreen() {
+    public int getcolor() {
         if (color("alpha") < 300) {
             return 0;   //no
         } else if (color("G") > color("B")) {
@@ -128,11 +182,11 @@ public class RobotBase {
 //    }
     public void spincolor(){
         spinPosition(SpinPose1);
-        color1 = isgreen();
+        color1 = getcolor();
         spinPosition(SpinPose2);
-        color2 = isgreen();
+        color2 = getcolor();
         spinPosition(SpinPose3);
-        color3 = isgreen();
+        color3 = getcolor();
     }
     public void armin(){
         robot.arm.setPosition(0.07);
@@ -145,7 +199,7 @@ public class RobotBase {
         robot.riseball.setPower(1);
     }
     public void intake(double IntakePower){
-        robot.intake.setPower(IntakePower);
+        robot.intake.setPower(-IntakePower);
     }
     public int getColor1() {return color1;}
     public int getColor2() {return color2;}

@@ -14,41 +14,42 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.FTC2025.RobotBase;
 
 public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants()
-            .mass(5.73)
-            .forwardZeroPowerAcceleration(-51.715800621689475)
-            .lateralZeroPowerAcceleration(-69.64900410311154)
+            .mass(11.3)
+            .forwardZeroPowerAcceleration(-46.00173423300071)
+            .lateralZeroPowerAcceleration(-67.8603986744576)
             .useSecondaryTranslationalPIDF(true)
             .useSecondaryHeadingPIDF(true)
             .useSecondaryDrivePIDF(true)
-            .headingPIDFCoefficients(new PIDFCoefficients(0.8, 0, 0.1, 0.1 ))
-            .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(0.002,0,0.001 ,0))
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.5, 0, 0.08, 0.5))
-            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.1,0,0.02,0.02))
-            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.01,0,0.001,0,0.1))
-            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.01,0,0.0001,0,0))
+            .headingPIDFCoefficients(new PIDFCoefficients(0.1,0.0001,0.25,0.15))
+            .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(0,0,0,0))
+            .translationalPIDFCoefficients(new PIDFCoefficients(0,0,0,0))
+            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0,0,0,0))
+            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0,0,0,0,0))
+            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0,0,0,0,0))
             .centripetalScaling(0.016);
     public static MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
-            .rightFrontMotorName("rf")
-            .rightRearMotorName("rb")
-            .leftRearMotorName("lb")
-            .leftFrontMotorName("lf")
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .xVelocity(55.19664277805119)
-            .yVelocity(45.28381299597072);
+            .rightFrontMotorName("RF")
+            .rightRearMotorName("RB")
+            .leftRearMotorName("LB")
+            .leftFrontMotorName("LF")
+            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .xVelocity(55.75938691867617)
+            .yVelocity(42.053054689422375);
     public static PinpointConstants localizerConstants = new PinpointConstants()
             .forwardPodY(-2.55)
             .strafePodX(2.16)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
-            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
+//            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
             .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 

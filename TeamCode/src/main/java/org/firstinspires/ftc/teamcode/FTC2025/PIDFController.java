@@ -2,22 +2,29 @@ package org.firstinspires.ftc.teamcode.FTC2025;
 
 public class PIDFController {
 
-    private double kP, kI, kD, kF;
+    private double kP, kI, kD, kF, deadband;
     private double integralSum = 0;
     private double lastError = 0;
     private long lastTime = 0;  // 用於計算 Δt
 
-    public PIDFController(double kP, double kI, double kD, double kF) {
+
+    public PIDFController(double kP, double kI, double kD, double kF, double deadband) {
         this.kP = kP;
         this.kI = kI;
         this.kD = kD;
         this.kF = kF;
+        this.deadband = deadband;
         this.lastTime = System.nanoTime();
     }
 
     public double data(double target, double current) {
 
+
         double error = target - current;
+        if (Math.abs(error) < deadband) {
+            error = 0.0;
+            integralSum = 0.0;
+        }
 
         long now = System.nanoTime();
         double dt = (now - lastTime) / 1e9;
