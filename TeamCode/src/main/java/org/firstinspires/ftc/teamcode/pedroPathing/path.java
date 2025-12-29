@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class path extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException{
-        Follower follower = Constants.createFollower(hardwareMap);
+        Follower follower = org.firstinspires.ftc.teamcode.pedroPathing.Constants.createFollower(hardwareMap);
 
 
         Pose startPose = new Pose(105.6, 33, Math.toRadians(0));

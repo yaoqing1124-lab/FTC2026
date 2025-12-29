@@ -12,14 +12,16 @@ import java.util.List;
 @Configurable
 public class RobotBase {
     RobotHardware robot;
-    static PIDFController aimPIDF = new PIDFController(0.015, 0.001, 0.005, 0,5);
-    static double SpinPose1 = 60;
+    static PIDFController aimPIDF = new PIDFController(0.01, 0, 0.005, 0,5);
+    static double SpinPose1 = 90;
     static double SpinPose2 = SpinPose1 + 100;
     static double SpinPose3 = SpinPose1 + 200;
     int spinPose = 1;
     public int color1;
     public int color2;
     public int color3;
+    static double armInPosition=0.09;
+    static double armOutPosition = 0.3;
 
     public RobotBase(HardwareMap hardwareMap) {
         robot = new RobotHardware(hardwareMap);
@@ -43,54 +45,6 @@ public class RobotBase {
         robot.shooter1.setPower(shooterVelocity);
         robot.shooter2.setPower(-shooterVelocity);
     }
-//    public double limelightlock(String type, int targetId) {
-//
-//        robot.limelight3A.setPollRateHz(100);
-//        robot.limelight3A.start();
-//        robot.limelight3A.pipelineSwitch(0);
-//
-//        LLResult result = robot.limelight3A.getLatestResult();
-//
-//        if (result != null && result.isValid()) {
-//
-//            switch (type) {
-//
-//                case "tx":
-//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
-//                        if (tag.getFiducialId() == targetId) {
-//                            return tag.getTx();
-//                        }
-//                    }
-//                    break;
-//
-//                case "ty":
-//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
-//                        if (tag.getFiducialId() == targetId) {
-//                            return tag.getTy();
-//                        }
-//                    }
-//                    break;
-//
-//                case "ta":
-//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
-//                        if (tag.getFiducialId() == targetId) {
-//                            return tag.getTa();
-//                        }
-//                    }
-//                    break;
-//
-//                case "id":
-//                    for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
-//                        if (tag.getFiducialId() == targetId) {
-//                            return tag.getFiducialId();
-//                        }
-//                    }
-//                    break;
-//            }
-//        }
-//        return 0;
-//    }
-
 
     public double limelight(String type) {
         robot.limelight3A.setPollRateHz(100);
@@ -119,6 +73,21 @@ public class RobotBase {
         robot.aimX1.setPower(aimPIDF.data(-limelight("tx"), robot.aimX1.getPower()));
         robot.aimX2.setPower(aimPIDF.data(-limelight("tx"), robot.aimX2.getPower()));
     }
+    public void setAimPower(double AimPower){
+        robot.aimX1.setPower(AimPower);
+        robot.aimX2.setPower(AimPower);
+    }
+    public void setAimPosition(double AimPosition){
+        if (Math.abs(AimPosition - getAimPosition()) > 50) {
+            if(getAimPosition()>150) {
+                setAimPower(0.2);
+            }else{
+                setAimPower(-0.2);
+            }
+        } else {
+            robot.aimX2.setPower(0);
+        }
+    }
 
     public void ShooterAim() {
         double ty = limelight("ty");
@@ -140,7 +109,10 @@ public class RobotBase {
     }
 
     public double getSpinPosition() {
-        return (robot.analog.getVoltage() / robot.analog.getMaxVoltage()) * 300;
+        return (robot.SpinAnalog.getVoltage() / robot.SpinAnalog.getMaxVoltage()) * 300;
+    }
+    public double getAimPosition(){
+        return (robot.AimAnalog.getVoltage() / robot.AimAnalog.getMaxVoltage()) * 300;
     }
 
     public void spinPosition(double Target) {
@@ -189,17 +161,20 @@ public class RobotBase {
         color3 = getcolor();
     }
     public void armin(){
-        robot.arm.setPosition(0.07);
+        robot.arm.setPosition(armInPosition);
     }
     public void armout(){
-        robot.arm.setPosition(0.5);
+        robot.arm.setPosition(armOutPosition);
     }
 
-    public void riseball(){
-        robot.riseball.setPower(1);
+    public void riseball(double riseballPower){
+        robot.riseball.setPower(riseballPower);
     }
     public void intake(double IntakePower){
         robot.intake.setPower(-IntakePower);
+    }
+    public double getArmPosition(){
+        return robot.arm.getPosition();
     }
     public int getColor1() {return color1;}
     public int getColor2() {return color2;}
