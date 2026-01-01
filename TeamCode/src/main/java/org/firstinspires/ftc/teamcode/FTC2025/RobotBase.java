@@ -13,6 +13,7 @@ import java.util.List;
 public class RobotBase {
     RobotHardware robot;
     static PIDFController aimPIDF = new PIDFController(0.01, 0, 0.005, 0,5);
+    static PIDFController spinPIDF = new PIDFController(0,0,0,0,0);
     static double SpinPose1 = 90;
     static double SpinPose2 = SpinPose1 + 100;
     static double SpinPose3 = SpinPose1 + 200;
@@ -89,10 +90,10 @@ public class RobotBase {
         }
     }
 
-    public void ShooterAim() {
+    public void ShooterAim(double aimYPosition) {
         double ty = limelight("ty");
-        robot.aimY1.setPosition(ty);
-        robot.aimY2.setPosition(1 - ty);
+        robot.aimY2.setPosition(aimYPosition);
+        robot.aimY2.setPosition(1- aimYPosition);
     }
 
     public double color(String type) {
@@ -116,11 +117,7 @@ public class RobotBase {
     }
 
     public void spinPosition(double Target) {
-        if (Math.abs(Target - getSpinPosition()) > 10) {
-            robot.spin.setPower(0.2);
-        } else {
-            robot.spin.setPower(0);
-        }
+            robot.spin.setPower(spinPIDF.data(Target,getSpinPosition()));
     }
     public void spinPower(double Power){
         robot.spin.setPower(Power);
@@ -179,4 +176,5 @@ public class RobotBase {
     public int getColor1() {return color1;}
     public int getColor2() {return color2;}
     public int getColor3() {return color3;}
+    public double getAimYPosition(){return robot.aimY1.getPosition();}
 }
